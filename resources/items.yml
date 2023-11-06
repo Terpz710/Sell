@@ -1,11 +1,13 @@
 # Terpz710
 
 items:
-  - "diamond"
-  - "gold_ingot"
-  - "iron_ingot"
-  - "emerald"
-  - "redstone"
-  - "coal"
+  - item: "diamond"
+    price: 10.0
+  - item: "gold_ingot"
+    price: 2.5
+  - item: "iron_ingot"
+    price: 1.0
+  - item: "emerald"
+    price: 15.0
 
-  # Add more items as needed
+# Add more items and prices as needed
