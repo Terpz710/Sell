@@ -1,0 +1,11 @@
+name: Sell-PM5
+version: 1.0.0-BETA
+author: Terpz710
+api: 5.0.0
+main: Terpz710\Sell\Main
+description: Simple sell. Sell, SellAll ect.
+
+permissions:
+  sell.sell:
+    description: Allows the player to sell their items specified through items.yml
+    default: true
