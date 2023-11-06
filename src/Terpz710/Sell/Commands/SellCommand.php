@@ -34,7 +34,7 @@ class SellCommand extends Command implements PluginOwned {
             $itemInHand = $sender->getInventory()->getItemInHand();
 
             if ($itemInHand->equals(VanillaItems::AIR())) {
-                $sender->sendMessage("§l§c(§f!§c) §r§fYou are not holding any items to sell.");
+                $sender->sendMessage("§l§c(§f§c) §r§fYou are not holding any items to sell!");
                 return true;
             }
 
@@ -45,13 +45,17 @@ class SellCommand extends Command implements PluginOwned {
                 $amount = (int)$args[0];
 
                 if ($amount <= 0) {
-                    $sender->sendMessage("§l§c(§f!§c) §r§fPlease specify a positive amount to sell.");
+                    $sender->sendMessage("§l§c(§f§c) §r§fPlease specify a positive amount to sell!");
                     return true;
                 }
             }
 
+            if ($amount > 64) {
+                $sender->sendMessage("§l§c(§f§c) §r§fYou can sell a maximum of 64!");
+                return true;
+            }
+
             $found = false;
-            $canSell = false;
 
             foreach ($sellableItems as $sellableItem) {
                 $parsedItem = StringToItemParser::getInstance()->parse($sellableItem);
@@ -60,20 +64,18 @@ class SellCommand extends Command implements PluginOwned {
                     if ($itemInHand->getCount() >= $amount) {
                         $itemInHand->setCount($itemInHand->getCount() - $amount);
                         $sender->getInventory()->setItemInHand($itemInHand);
-                        $sender->sendMessage("You have sold §b" . $amount . "§f of §b" . $itemInHand->getName());
+                        $sender->sendMessage("§l§a(§f§a) §r§fYou have sold §b" . $amount . " §b" . $itemInHand->getName() . "§f!");
                         $found = true;
-                        $canSell = true;
+                        break;
                     } else {
-                        $canSell = false;
+                        $sender->sendMessage("§l§c(§f§c) §r§fYou don't have enough items to sell!");
+                        return true;
                     }
-                    break;
                 }
             }
 
             if (!$found) {
-                $sender->sendMessage("§l§c(§f!§c) §r§fThis item cannot be sold!");
-            } elseif (!$canSell) {
-                $sender->sendMessage("§l§c(§f!§c) §r§fYou don't have enough of this item to sell.");
+                $sender->sendMessage("§l§c(§f§c) §r§fThis item cannot be sold!");
             }
         } else {
             $sender->sendMessage("This command can only be used by players.");
