@@ -51,6 +51,7 @@ class SellCommand extends Command implements PluginOwned {
             }
 
             $found = false;
+            $canSell = false;
 
             foreach ($sellableItems as $sellableItem) {
                 $parsedItem = StringToItemParser::getInstance()->parse($sellableItem);
@@ -61,8 +62,9 @@ class SellCommand extends Command implements PluginOwned {
                         $sender->getInventory()->setItemInHand($itemInHand);
                         $sender->sendMessage("You have sold §b" . $amount . "§f of §b" . $itemInHand->getName());
                         $found = true;
+                        $canSell = true;
                     } else {
-                        $sender->sendMessage("§l§c(§f!§c) §r§fYou don't have enough of this item to sell.");
+                        $canSell = false;
                     }
                     break;
                 }
@@ -70,6 +72,8 @@ class SellCommand extends Command implements PluginOwned {
 
             if (!$found) {
                 $sender->sendMessage("§l§c(§f!§c) §r§fThis item cannot be sold!");
+            } elseif (!$canSell) {
+                $sender->sendMessage("§l§c(§f!§c) §r§fYou don't have enough of this item to sell.");
             }
         } else {
             $sender->sendMessage("This command can only be used by players.");
