@@ -40,15 +40,37 @@ class SellCommand extends Command implements PluginOwned {
 
             $sellableItems = $this->itemsConfig->get("items", []);
 
-            foreach ($sellableItems as $sellableItem) {
-                if ($itemInHand->equals(StringToItemParser::getInstance()->parse($sellableItem))) {
-                    $sender->getInventory()->removeItem($itemInHand);
-                    $sender->sendMessage("You have sold the item:§b " . $itemInHand->getName());
+            $amount = 1;
+            if (!empty($args) && is_numeric($args[0])) {
+                $amount = (int)$args[0];
+
+                if ($amount <= 0) {
+                    $sender->sendMessage("§l§c(§f!§c) §r§fPlease specify a positive amount to sell.");
                     return true;
                 }
             }
 
-            $sender->sendMessage("§l§c(§f!§c) §r§fThis item cannot be sold!");
+            $found = false;
+
+            foreach ($sellableItems as $sellableItem) {
+                $parsedItem = StringToItemParser::getInstance()->parse($sellableItem);
+
+                if ($itemInHand->equals($parsedItem)) {
+                    if ($itemInHand->getCount() >= $amount) {
+                        $itemInHand->setCount($itemInHand->getCount() - $amount);
+                        $sender->getInventory()->setItemInHand($itemInHand);
+                        $sender->sendMessage("You have sold §b" . $amount . "§f of §b" . $itemInHand->getName());
+                        $found = true;
+                    } else {
+                        $sender->sendMessage("§l§c(§f!§c) §r§fYou don't have enough of this item to sell.");
+                    }
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $sender->sendMessage("§l§c(§f!§c) §r§fThis item cannot be sold!");
+            }
         } else {
             $sender->sendMessage("This command can only be used by players.");
         }
