@@ -10,6 +10,7 @@ use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\Plugin;
 use pocketmine\player\Player;
 use pocketmine\item\StringToItemParser;
+use pocketmine\item\VanillaItems;
 use pocketmine\utils\Config;
 
 class SellCommand extends Command implements PluginOwned {
@@ -31,6 +32,11 @@ class SellCommand extends Command implements PluginOwned {
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if ($sender instanceof Player) {
             $itemInHand = $sender->getInventory()->getItemInHand();
+
+            if ($itemInHand->equals(VanillaItems::AIR())) {
+                $sender->sendMessage("§l§c(§f!§c) §r§fYou are not holding any items to sell.");
+                return true;
+            }
 
             $sellableItems = $this->itemsConfig->get("items", []);
 
