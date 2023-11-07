@@ -24,7 +24,7 @@ class SellCommand extends Command implements PluginOwned {
         $this->plugin = $plugin;
         $this->setPermission("sell.sell");
         $this->itemsConfig = new Config($this->plugin->getDataFolder() . "items.yml", Config::YAML);
-        $this->economyManager = new EconomyManager($plugin); // Initialize your EconomyManager
+        $this->economyManager = new EconomyManager($plugin);
     }
 
     public function getOwningPlugin(): Plugin {
@@ -32,74 +32,71 @@ class SellCommand extends Command implements PluginOwned {
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
-        if ($sender instanceof Player) {
-            $itemInHand = $sender->getInventory()->getItemInHand();
+        if (!$sender instanceof Player) {
+            $sender->sendMessage("This command can only be used by players.");
+            return true;
+        }
 
-            if ($itemInHand->equals(VanillaItems::AIR())) {
-                $sender->sendMessage("§l§c(§f!§c) §r§fYou are not holding any items to sell!");
+        $itemInHand = $sender->getInventory()->getItemInHand();
+
+        if ($itemInHand->equals(VanillaItems::AIR())) {
+            $sender->sendMessage("§l§c(§f!§c) §r§fYou are not holding any items to sell!");
+            return true;
+        }
+
+        $sellableItems = $this->itemsConfig->get("items", []);
+        $amount = 1;
+
+        if (!empty($args) && is_numeric($args[0])) {
+            $amount = (int)$args[0];
+
+            if ($amount <= 0) {
+                $sender->sendMessage("§l§c(§f!§c) §r§fPlease specify a positive amount to sell!");
                 return true;
             }
+        }
 
-            $sellableItems = $this->itemsConfig->get("items", []);
-            $amount = 1;
+        if ($amount > 64) {
+            $sender->sendMessage("§l§c(§f!§c) §r§fYou can sell a maximum of 64!");
+            return true;
+        }
 
-            if (!empty($args) && is_numeric($args[0])) {
-                $amount = (int)$args[0];
+        $found = false;
 
-                if ($amount <= 0) {
-                    $sender->sendMessage("§l§c(§f!§c) §r§fPlease specify a positive amount to sell!");
-                    return true;
-                }
-            }
+        foreach ($sellableItems as $itemData) {
+            if (is_array($itemData) && isset($itemData["name"]) && is_string($itemData["name"])) {
+                $itemName = $itemData["name"];
+                $parsedItem = StringToItemParser::getInstance()->parse($itemName);
 
-            if ($amount > 64) {
-                $sender->sendMessage("§l§c(§f!§c) §r§fYou can sell a maximum of 64!");
-                return true;
-            }
+                if ($itemInHand->equals($parsedItem)) {
+                    if ($itemInHand->getCount() >= $amount) {
+                        $itemInHand->setCount($itemInHand->getCount() - $amount);
+                        $sender->getInventory()->setItemInHand($itemInHand);
+                        $found = true;
 
-            $found = false;
-            $itemNotSellable = true; // Variable to track if the item is not sellable
+                        $itemPrice = $this->getItemPrice($itemName);
 
-            foreach ($sellableItems as $itemData) {
-                if (is_array($itemData) && isset($itemData["name"]) && is_string($itemData["name"])) {
-                    $itemName = $itemData["name"];
-                    $parsedItem = StringToItemParser::getInstance()->parse($itemName);
+                        if ($itemPrice > 0) {
+                            $totalPrice = $itemPrice * $amount;
 
-                    if ($itemInHand->equals($parsedItem)) {
-                        if ($itemInHand->getCount() >= $amount) {
-                            $itemInHand->setCount($itemInHand->getCount() - $amount);
-                            $sender->getInventory()->setItemInHand($itemInHand);
-                            $found = true;
-
-                            $itemPrice = $this->getItemPrice($itemName);
-
-                            if ($itemPrice > 0) {
-                                $totalPrice = $itemPrice * $amount;
-
-                                // Add money to the player's account
-                                $this->economyManager->addMoney($sender, $totalPrice, function(bool $success) use ($sender, $amount, $totalPrice) {
-                                    if ($success) {
-                                        $sender->sendMessage("§l§a(§f!§a) §r§fYou have sold §b" . $amount . " §b" . $itemInHand->getName() . "§f for §e$" . $totalPrice);
-                                    } else {
-                                        $sender->sendMessage("§l§c(§f!§c) §r§fFailed to add money. Please check your economy plugin configuration.");
-                                    }
-                                });
-
-                                $itemNotSellable = false; // Item is successfully sold
-                            }
-                        } else {
-                            $sender->sendMessage("§l§c(§f!§c) §r§fYou don't have enough items to sell!");
-                            return true;
+                            $this->economyManager->addMoney($sender, $totalPrice, function(bool $success) use ($sender, $amount, $totalPrice) {
+                                if ($success) {
+                                    $sender->sendMessage("§l§a(§f!§a) §r§fYou have sold §b" . $amount . " §b" . $itemInHand->getName() . "§f for §e$" . $totalPrice);
+                                } else {
+                                    $sender->sendMessage("§l§c(§f!§c) §r§fFailed to add money. Please check your economy plugin configuration.");
+                                }
+                            });
                         }
+                    } else {
+                        $sender->sendMessage("§l§c(§f!§c) §r§fYou don't have enough items to sell!");
+                        return true;
                     }
                 }
             }
+        }
 
-            if (!$found && $itemNotSellable) {
-                $sender->sendMessage("§l§c(§f!§c) §r§fThis item cannot be sold.");
-            }
-        } else {
-            $sender->sendMessage("This command can only be used by players.");
+        if (!$found) {
+            $sender->sendMessage("§l§c(§f!§c) §r§fThis item cannot be sold.");
         }
 
         return true;
@@ -116,6 +113,6 @@ class SellCommand extends Command implements PluginOwned {
             }
         }
 
-        return 0; // Return 0 if the item has no price or isn't found
+        return 0;
     }
 }
