@@ -82,7 +82,7 @@ class SellCommand extends Command implements PluginOwned {
 
                             $this->economyManager->addMoney($sender, $totalPrice, function(bool $success) use ($sender, $amount, $totalPrice) {
                                 if ($success) {
-                                    $sender->sendMessage("§l§a(§f!§a) §r§fYou have sold §b" . $amount . " §b" . $itemInHand->getName() . "§f for §e$" . $totalPrice);
+                                    $sender->sendMessage("§l§a(§f!§a) §r§fYou have sold §b" . $amount . " §bitems" . "§f for §e$" . $totalPrice . "§f!");
                                 } else {
                                     $sender->sendMessage("§l§c(§f!§c) §r§fFailed to add money. Please check your economy plugin configuration.");
                                 }
