@@ -5,4 +5,6 @@ branches:
 projects:
   Sell-PM5:
     path: ""
+    lint:
+      phpstan: false
 ...
