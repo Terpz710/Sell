@@ -9,3 +9,6 @@ permissions:
   sell.sell:
     description: Allows the player to sell their items specified through items.yml
     default: true
+  sell.sellall:
+    description: Allows the player to sell all items in their inventory
+    default: true
