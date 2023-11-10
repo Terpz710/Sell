@@ -1,6 +1,6 @@
 name: Sell-PM5
-version: 1.0.3-BETA
-author: Terpz710
+version: 1.0.4-BETA
+author: Terpz710, Wildan-Dev461
 api: 5.0.0
 main: Terpz710\Sell\Main
 description: Simple sell. Sell, SellAll ect.
