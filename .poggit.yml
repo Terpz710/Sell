@@ -1,9 +1,9 @@
---- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Terpz710/Sell-PM5
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Terpz710/Sell
 build-by-default: true
 branches:
 - main
 projects:
-  Sell-PM5:
+  Sell:
     path: ""
     lint:
       phpstan: false
