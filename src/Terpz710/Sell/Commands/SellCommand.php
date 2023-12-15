@@ -23,7 +23,7 @@ class SellCommand extends Command implements PluginOwned {
     public function __construct(Plugin $plugin) {
         parent::__construct("sell", "Sell the item you are holding");
         $this->plugin = $plugin;
-        $this->setPermission("sell.sell");
+        $this->setPermission("sell.command.sell");
         $this->itemsConfig = new Config($this->plugin->getDataFolder() . "items.yml", Config::YAML);
         $this->economyManager = new EconomyManager($plugin);
     }
