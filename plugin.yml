@@ -6,9 +6,9 @@ main: Terpz710\Sell\Main
 description: Sell, SellAll ect.
 
 permissions:
-  sell.sell:
+  sell.command.sell:
     description: Allows the player to sell their items specified through items.yml
     default: true
-  sell.sellall:
+  sell.command.sellall:
     description: Allows the player to sell all items in their inventory
     default: true
