@@ -23,7 +23,7 @@ class SellAllCommand extends Command implements PluginOwned {
     public function __construct(Plugin $plugin) {
         parent::__construct("sellall", "Sell all items in your inventory");
         $this->plugin = $plugin;
-        $this->setPermission("sell.sellall");
+        $this->setPermission("sell.command.sellall");
         $this->itemsConfig = new Config($this->plugin->getDataFolder() . "items.yml", Config::YAML);
         $this->economyManager = new EconomyManager($plugin);
     }
