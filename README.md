@@ -38,4 +38,4 @@ https://poggit.pmmp.io/p/BedrockEconomy/2.1.2
 
 **EconomyAPI**
 
-https://poggit.pmmp.io/ci/ACM-PocketMine-MP/EconomyAPI/EconomyAPI
+https://poggit.pmmp.io/ci/FusionPE/EconomyAPI/EconomyAPI
