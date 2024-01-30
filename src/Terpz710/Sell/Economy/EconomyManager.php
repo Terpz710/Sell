@@ -9,6 +9,9 @@ use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 
 use cooldogedev\BedrockEconomy\api\legacy\ClosureContext;
+use cooldogedev\BedrockEconomy\BedrockEconomy;
+use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
+use cooldogedev\BedrockEconomy\api\version\LegacyBEAPI;
 use onebone\economyapi\EconomyAPI;
 use Terpz710\Sell\Main;
 
@@ -22,6 +25,7 @@ class EconomyManager {
         $this->plugin = $plugin;
         $manager = $plugin->getServer()->getPluginManager();
         $this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? null;
+        $this->api = BedrockEconomyAPI::legacy();
         unset($manager);
     }
 
@@ -33,12 +37,12 @@ class EconomyManager {
                 $callback($money);
                 break;
             case "BedrockEconomy":
-                $this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
+                $this->api->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
                     $callback($balance ?? 0);
                 }));
                 break;
             default:
-                $this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
+                $this->api->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
                     $callback($balance ?? 0);
                 }));
         }
@@ -54,7 +58,7 @@ class EconomyManager {
                 $callback($this->eco->reduceMoney($player->getName(), $amount) === EconomyAPI::RET_SUCCESS);
                 break;
             case "BedrockEconomy":
-                $this->eco->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
+                $this->api->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
                     $callback($success);
                 }));
                 break;
@@ -71,7 +75,7 @@ class EconomyManager {
                 $callback($this->eco->addMoney($player->getName(), $amount, EconomyAPI::RET_SUCCESS));
                 break;
             case "BedrockEconomy":
-                $this->eco->getAPI()->addToPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
+                $this->api->addToPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
                     $callback($success);
                 }));
                 break;
