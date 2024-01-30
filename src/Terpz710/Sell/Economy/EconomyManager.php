@@ -33,12 +33,12 @@ class EconomyManager {
                 $callback($money);
                 break;
             case "BedrockEconomy":
-                $this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
+                $this->eco->legacy()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
                     $callback($balance ?? 0);
                 }));
                 break;
             default:
-                $this->eco->getAPI()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
+                $this->eco->legacy()->getPlayerBalance($player->getName(), ClosureContext::create(static function(?int $balance) use($callback) : void {
                     $callback($balance ?? 0);
                 }));
         }
@@ -54,7 +54,7 @@ class EconomyManager {
                 $callback($this->eco->reduceMoney($player->getName(), $amount) === EconomyAPI::RET_SUCCESS);
                 break;
             case "BedrockEconomy":
-                $this->eco->getAPI()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
+                $this->eco->legacy()->subtractFromPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
                     $callback($success);
                 }));
                 break;
@@ -71,7 +71,7 @@ class EconomyManager {
                 $callback($this->eco->addMoney($player->getName(), $amount, EconomyAPI::RET_SUCCESS));
                 break;
             case "BedrockEconomy":
-                $this->eco->getAPI()->addToPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
+                $this->eco->legacy()->addToPlayerBalance($player->getName(), (int) ceil($amount), ClosureContext::create(static function(bool $success) use($callback) : void {
                     $callback($success);
                 }));
                 break;
