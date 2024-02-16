@@ -18,6 +18,8 @@ use Terpz710\Sell\Main;
 class EconomyManager {
     /** @var Plugin|null $eco */
     private ?Plugin $eco;
+    /** @var LegacyBEAPI|null $api */
+    private ?LegacyBEAPI $api;
     /** @var Main $plugin */
     private Main $plugin;
 
