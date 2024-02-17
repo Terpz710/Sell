@@ -11,15 +11,15 @@ use pocketmine\plugin\Plugin;
 use cooldogedev\BedrockEconomy\api\legacy\ClosureContext;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
-use cooldogedev\BedrockEconomy\api\version\LegacyBEAPI;
+use cooldogedev\BedrockEconomy\api\type\LegacyAPI;
 use onebone\economyapi\EconomyAPI;
 use Terpz710\Sell\Main;
 
 class EconomyManager {
     /** @var Plugin|null $eco */
     private ?Plugin $eco;
-    /** @var LegacyBEAPI|null $api */
-    private ?LegacyBEAPI $api;
+    /** @var LegacyAPI|null $api */
+    private ?LegacyAPI $api;
     /** @var Main $plugin */
     private Main $plugin;
 
