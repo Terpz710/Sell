@@ -1,6 +1,7 @@
 name: Sell
-version: 1.0.0
-author: Terpz710, Wildan-Dev461
+version: 1.0.1
+author: Terpz710
+authors: ["Wildan-Dev461"]
 api: 5.0.0
 main: Terpz710\Sell\Main
 description: Sell, SellAll ect.
