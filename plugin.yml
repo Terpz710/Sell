@@ -1,15 +1,19 @@
 name: Sell
-version: 1.0.2
+version: 1.0.3
 author: Terpz710
-authors: ["Wildan-Dev461", "Jorgebyte"]
+contributors: 
+  - Wildan-Dev461
+  - Jorgebyte
 api: 5.0.0
-main: Terpz710\Sell\Main
-description: Sell, SellAll ect.
+main: terpz710\sell\Main
+description: Sell, SellAll, SellHand and AutoSell.
 
 permissions:
-  sell.command.sell:
-    description: Allows the player to sell their items specified through items.yml
+  sell.hand:
     default: true
-  sell.command.sellall:
-    description: Allows the player to sell all items in their inventory
+  sell.items:
+    default: true
+  sell.all:
+    default: true
+  sell.autosell:
     default: true
