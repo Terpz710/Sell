@@ -2,29 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Terpz710\Sell\Economy;
+namespace terpz710\sell\manager;
 
 use Closure;
+
 use pocketmine\player\Player;
 
+use pocketmine\utils\SingletonTrait;
+
 use onebone\economyapi\EconomyAPI;
-use cooldogedev\BedrockEconomy\api\type\ClosureAPI;
+
 use cooldogedev\BedrockEconomy\BedrockEconomy;
-use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use cooldogedev\BedrockEconomy\currency\Currency;
+use cooldogedev\BedrockEconomy\api\type\ClosureAPI;
+use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use cooldogedev\BedrockEconomy\database\cache\GlobalCache;
 
-use Terpz710\Sell\Main;
+use terpz710\sell\Main;
 
 class EconomyManager {
+    use SingletonTrait;
 
     private $eco;
     private ?ClosureAPI $api;
     private Currency $currency;
     private Main $plugin;
 
-    public function __construct(Main $plugin) {
-        $this->plugin = $plugin;
+    public function __construct() {
+        $this->plugin = Main::getInstance();
         $manager = $this->plugin->getServer()->getPluginManager();
         $this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? null;
 
