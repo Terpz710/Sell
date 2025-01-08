@@ -1,0 +1,68 @@
+# Terpz710
+
+# When a user sells a item using /sellhand <amount>
+# You may use '&' for color coding(e.g. &l&bcyan)
+# Available tags:
+#  - {amount} = amount of items sold
+#  - {item_name} = the name of the sold
+#  - {total} = amount of money made from selling the items
+
+successfully-sold-item: "Sold {amount} {item_name} for ${total}"
+
+# When a user sells an item using /sell
+# When the user runs the command while holding an item it will sell all of the same item that the user is holding
+# You may use '&' for color coding(e.g. &l&bcyan)
+# Available tags:
+#  - {item_name} = the name of the sold
+#  - {total} = amount of money made from selling the items
+
+successfully-sold-all-the-same-item: "Sold all {item_name} for ${total}"
+
+# When a user sells all of their sellable items using /sellall
+# You may use '&' for color coding(e.g. &l&bcyan)
+# Available tags:
+#  - {total} = amount of money made from selling the items
+
+successfully-sold-all-item: "Sold all sellable items for ${total}"
+
+# When a user sells all of their sellable items using /sellall
+# You may use '&' for color coding(e.g. &l&bcyan)
+# Available tags:
+#  - {total} = amount of money made from selling the items
+
+successfully-auto-sold-item: "Auto-sold all the sellable items within your inventory and gained ${total}"
+
+# When a user runs the command /autosell
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+enable-auto-sell: "Auto-sell has been enabled!"
+
+# When a user runs the command /autosell
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+disable-auto-sell: "Auto-sell has been disabled!"
+
+# When a user tries to sell air(nothing in hand)
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+must-hold-item: "You don't have an item in your hand to sell!"
+
+# When a user tries to input a negative number
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+must-be-positive-amount: "Please specify a positive number to sell!"
+
+# When a user tries to input an integer larger than 64
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+must-not-exceed-stack-limit: "You can sell a maximum of 64!"
+
+# When a user inputs an amount larger than the stack amount when using /sellhand <amount>
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+not-enough-item: "You don't have enough of this item to sell!"
+
+# When a user tries to sell an unsellable item
+# You may use '&' for color coding(e.g. &l&bcyan)
+
+item-not-sellable: "This item cannot be sold!"
