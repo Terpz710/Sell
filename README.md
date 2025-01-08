@@ -11,23 +11,13 @@ With this plugin players can now sell items specifed through the items.yml
 ```
 Commands:
 
-/sell [amount]
+/sellhand <amount>
+
+/sell
 
 /sellall
 
-Permissions:
-
-  sell.sell:
-    description: Allows the player to sell their items specified through items.yml
-
-    default: true
-
-  sell.sellall:
-
-    description: Allows the player to sell all items in their inventory
-
-    default: true
-
+/autosell
 ```
 
 # Required economy plugins
