@@ -21,7 +21,7 @@ One of the best out there forsure!
 
 * Auto Sell - When enabled any sellable items the player picks up or has gets sold automatically
 
-# Commands/Permissions
+# Commands
 ```
 Commands:
 
