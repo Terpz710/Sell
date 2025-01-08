@@ -1,17 +1,17 @@
 # Terpz710
 
 items:
-  - name: "diamond"
+  - id: "diamond"
     price: 10
-  - name: "gold_ingot"
+  - id: "gold_ingot"
     price: 5
-  - name: "iron_ingot"
+  - id: "iron_ingot"
     price: 2
-  - name: "emerald"
+  - id: "emerald"
     price: 15
-  - name: "redstone"
+  - id: "redstone"
     price: 1
-  - name: "coal"
+  - id: "coal"
     price: 1
 
 # Add more items and prices as needed
