@@ -34,12 +34,11 @@ Commands:
 /autosell
 ```
 
-# Required economy plugins
+# Required
+This plugin requires one of the 3 economy plugin:
 
-**BedrockEconomy**
+1. [Mineconomy](https://github.com/Terpz710/Mineconomy)
 
-https://poggit.pmmp.io/p/BedrockEconomy/2.1.2
+2. [BedrockEconomy](https://poggit.pmmp.io/p/BedrockEconomy/2.1.2)
 
-**EconomyAPI**
-
-https://poggit.pmmp.io/ci/FusionPE/EconomyAPI/EconomyAPI
+3. [EconomyAPI](https://poggit.pmmp.io/ci/FusionPE/EconomyAPI/EconomyAPI)
