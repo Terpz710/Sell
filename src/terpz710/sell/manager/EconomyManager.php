@@ -61,7 +61,7 @@ class EconomyManager {
                 $callback($entry ? (float)"{$entry->amount}.{$entry->decimals}" : (float)"{$this->currency->defaultAmount}.{$this->currency->defaultDecimals}");
                 break;
             case "Mineconomy":
-                $callback((float)Mineconomy::getInstance()->getBalance($player->getName()) ?? 0.0);
+                $callback((float)Mineconomy::getInstance()->getBalance($player) ?? 0.0);
                 break;
             default:
                 $callback(0.0);
@@ -91,7 +91,7 @@ class EconomyManager {
                 );
                 break;
             case "Mineconomy":
-                Mineconomy::getInstance()->addFunds($player->getName(), $amount);
+                Mineconomy::getInstance()->addFunds($player, $amount);
                 $callback(true);
                 break;
             default:
