@@ -1,9 +1,6 @@
 name: Sell
 version: 1.0.4
 author: Terpz710
-contributors: 
-  - Wildan-Dev461
-  - Jorgebyte
 api: 5.0.0
 main: terpz710\sell\Main
 description: Sell, SellAll, SellHand and AutoSell.
