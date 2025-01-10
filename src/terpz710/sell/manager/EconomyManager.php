@@ -18,6 +18,8 @@ use cooldogedev\BedrockEconomy\api\type\ClosureAPI;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use cooldogedev\BedrockEconomy\database\cache\GlobalCache;
 
+use terpz710\mineconomy\Mineconomy;
+
 use terpz710\sell\Main;
 
 class EconomyManager {
@@ -31,7 +33,7 @@ class EconomyManager {
     public function __construct() {
         $this->plugin = Main::getInstance();
         $manager = $this->plugin->getServer()->getPluginManager();
-        $this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? null;
+        $this->eco = $manager->getPlugin("EconomyAPI") ?? $manager->getPlugin("BedrockEconomy") ?? $manager->getPlugin("Mineconomy") ?? null;
 
         if ($this->eco instanceof BedrockEconomy) {
             $this->api = BedrockEconomyAPI::CLOSURE();
@@ -39,7 +41,7 @@ class EconomyManager {
         }
 
         if ($this->eco === null) {
-            $this->plugin->getLogger()->warning("ERROR: No compatible economy plugin found. Please install EconomyAPI or BedrockEconomy");
+            $this->plugin->getLogger()->warning("ERROR: No compatible economy plugin found. Please install EconomyAPI, BedrockEconomy, or Mineconomy");
         }
     }
 
@@ -57,6 +59,9 @@ class EconomyManager {
             case "BedrockEconomy":
                 $entry = GlobalCache::ONLINE()->get($player->getName());
                 $callback($entry ? (float)"{$entry->amount}.{$entry->decimals}" : (float)"{$this->currency->defaultAmount}.{$this->currency->defaultDecimals}");
+                break;
+            case "Mineconomy":
+                $callback((float)Mineconomy::getInstance()->getBalance($player->getName()) ?? 0.0);
                 break;
             default:
                 $callback(0.0);
@@ -84,6 +89,10 @@ class EconomyManager {
                     fn() => $callback(true),
                     fn() => $callback(false)
                 );
+                break;
+            case "Mineconomy":
+                Mineconomy::getInstance()->addFunds($player->getName(), $amount);
+                $callback(true);
                 break;
             default:
                 $callback(false);
